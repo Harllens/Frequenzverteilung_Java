@@ -30,7 +30,7 @@ public class Programm
 	new Overlaps().CalculateOverlaps();
 	Frequencies frequenz = new Frequencies();
 
-	for (int i = 1; i == count; i++)
+	for (int i = 1; i != count; i++)
 	{
 	    frequenz.FindFrequencies();
 	}

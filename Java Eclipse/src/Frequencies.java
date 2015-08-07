@@ -34,12 +34,21 @@ public class Frequencies
 		tempSender.getOverlapsList());
     }
 
-    private void CountDisabledFrequencies(int frequence,
-	    List<Integer> senderOverlap)
+    private void CountDisabledFrequencies(int frequence, List<Integer> senderOverlap)
     {
+    	SenderProperties disabledFrequencies = new SenderProperties();
+    	
 	for (int overlap : senderOverlap)
 	{
-	    SenderCollection.senderCollection.stream().filter(r -> r.get_Radius() == overlap).findFirst().get().setDisableFrecuencies(frequence);
+		//SenderCollection.senderCollection.stream().filter(r -> r.get_Radius() == overlap).findFirst().get().setDisableFrecuencies(frequence);
+
+		for(SenderProperties r : SenderCollection.senderCollection)
+	    {
+	    	if(r.get_Radius() == overlap)
+	    	{
+	    		disabledFrequencies.setDisableFrecuencies(frequence);
+	    	}
+	    }
 	}
     }
 }
