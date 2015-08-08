@@ -2,7 +2,8 @@ import java.util.*;
 
 public class SenderCollection
 {
-    public static List<SenderProperties> senderCollection = new ArrayList<SenderProperties>();
-    public static List<SenderProperties> senderwithFrequencies = new ArrayList<SenderProperties>();
+    public SenderCollection() {}
+    public static List<Sender> senderCollection = new ArrayList<Sender>();
+    public static List<Sender> senderwithFrequencies = new ArrayList<Sender>();
 }
 

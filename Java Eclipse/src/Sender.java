@@ -1,47 +1,89 @@
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Sender
 {
-    public Sender() { }
+    public Sender() {}
 
-    public int getLines(String[] lines)
+    private Integer Sender;
+    private double X;
+    private double Y;
+    private double Radius;
+    private int Frequency;
+    private List<Integer> Overlaps = new ArrayList<Integer>();
+    private List<Integer> DisableFrecuencies = new ArrayList<Integer>();
+
+    // /
+    // Get / Set methods for the properties
+    // /
+    int getSender()
     {
-	int count = 1;
-
-	for(int i = 0; i < lines.length; i++)
-	{
-	    String[] splittedLine = lines[i].split(" ");
-	    
-	    if (Character.isDigit(splittedLine[0].charAt(0)))
-	    {
-		SenderProperties senderp = new SenderProperties();
-		senderp.setSender(count);
-		senderp.set_X(Float.valueOf(splittedLine[0]).floatValue());
-		senderp.set_Y(Float.valueOf(splittedLine[1]).floatValue());
-		senderp.set_Radius(Float.valueOf(splittedLine[2]).floatValue());
-		SenderCollection.senderCollection.add(senderp);
-		count++;
-	    }
-	}
-	return count;
+	return Sender;
     }
-    
-//    private void readFile(String file)
-//    {
-//	ArrayList<String> getText = new ArrayList<String>();
-//	
-//	BufferedReader textReader;
-//	try
-//	{
-//	    textReader = new BufferedReader(new FileReader(lines));
-//	    
-//	    while(textReader.read() != -1)
-//	    {
-//	        getText.add(textReader.readLine());
-//	    }
-//	}
-//	catch (Exception e)
-//	{
-//	    e.printStackTrace();
-//	}
-//	textReader.close();
-//    }
+
+    void setSender(int sender)
+    {
+	this.Sender = sender;
+    }
+
+    double get_X()
+    {
+	return X;
+    }
+
+    void set_X(double x)
+    {
+	this.X = x;
+    }
+
+    double get_Y()
+    {
+	return Y;
+    }
+
+    void set_Y(double y)
+    {
+	this.Y = y;
+    }
+
+    double get_Radius()
+    {
+	return Radius;
+    }
+
+    void set_Radius(double radius)
+    {
+	this.Radius = radius;
+    }
+
+    int getFrequency()
+    {
+	return Frequency;
+    }
+
+    void setFrequency(int frequency)
+    {
+	this.Frequency = frequency;
+    }
+
+    List<Integer> getOverlapsList()
+    {
+	return Overlaps;
+    }
+
+    void setOverlapsList(int overlap)
+    {
+	this.Overlaps.add(overlap);
+    }
+
+    List<Integer> getDisableFrecuencies()
+    {
+	return DisableFrecuencies;
+    }
+
+    void setDisableFrecuencies(int frequency)
+    {
+	this.DisableFrecuencies.add(frequency);
+    }
 }
