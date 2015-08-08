@@ -1,23 +1,77 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SenderManager
 {
     public SenderManager() {}
     
-    public void outPut()
+    final static Charset ENCODING = StandardCharsets.UTF_8;
+    
+    /// <summary>
+    /// READ AND SAVE THE FILE IN A LIST STRING AND RETURN IT VALUES 
+    /// </summary>
+    public Object[] readFileFromText(String fileName) throws IOException
     {
-	for (Sender sender : SenderCollection.senderwithFrequencies)
-	{
-	    System.out.println("S" + sender.getSender() + "->" + sender.getFrequency());
-	}
+	List<String> lines = new ArrayList<String>();
+	Path path = Paths.get(fileName);
+	BufferedReader reader = Files.newBufferedReader(path, ENCODING);
+	String line = null;
+	
+	while ((line = reader.readLine()) != null) 
+	    lines.add(line);
+
+	return lines.toArray();
     }
     
-    public int getLinesFromStream(String[] lines)
+    public void outPut() throws NullPointerException
+    {
+	System.out.println("\n");
+	System.out.println("Senderpositionen (X,Y) und Senderadien:");
+	for (Sender sender : SenderCollection.senderCollection)
+	    System.out.println("S" + sender.getSender() + " " + sender.get_X() + " " + sender.get_Y() + " " + sender.get_Radius());
+	
+	System.out.println("\n");
+	System.out.println("Frequenzzuordnung");
+	for (Sender sender : SenderCollection.senderwithFrequencies)
+	    System.out.println("S" + sender.getSender() + "->" + sender.getFrequency());
+	
+	System.out.println("\n");
+	int count = 1;
+	do 
+	{
+	    String Sender = "";
+	    String s = "";
+	
+	    for (Sender sender : SenderCollection.senderwithFrequencies)
+		if(sender.getFrequency() == count)
+		{
+		    s += " S" + sender.getSender();
+		    Sender = "Frequenz: " + sender.getFrequency() + " " + " Sender:" + s;
+		}
+	    count++;
+
+	    if(!Sender.isEmpty())
+		    System.out.println(Sender);
+	    
+	}while(count != SenderCollection.senderwithFrequencies.size());
+    }
+    
+    /// <summary>
+    /// GET THE LINES FROM THE STREAM LIST, SPLITT IT AND STORES IN SENDERCOLLECTION
+    /// </summary>
+    public int splittLinesFromStreamString(Object[] lines)
     {
 	int countSenders = 1;
 	for(int i = 0; i < lines.length; i++)
 	{
-	    String[] splittedLine = lines[i].split(" ");
+	    String[] splittedLine = ((String) lines[i]).split(" ");
 	    
 	    if (Character.isDigit(splittedLine[0].charAt(0)))
 	    {
@@ -36,7 +90,7 @@ public class SenderManager
     /// <summary>
     /// CALCULATE THE SENDER WITH MOST OVERLAPS TO CHOOSE THE INITIAL SENDER
     /// Get the sender from a "SenderCollection List", calculate the overlaps and save the result in a "Overlaps List".
-    /// Nested " Foreach " used for the calculation
+    /// Nested " For-each " used for the calculation
     /// </summary>
     public void CalculateOverlaps()
     {
@@ -59,7 +113,7 @@ public class SenderManager
     /// </summary>
     public void FindFrequencies()
     {
-	// Temporal "tempSender Instance" for Frequencies comparation.
+	// Temporal "tempSender Instance" for Frequencies comparison.
 	Sender tempSender = new Sender();
 	for (Sender sender : SenderCollection.senderCollection)
 	{
@@ -89,12 +143,12 @@ public class SenderManager
 	}
 	for (int i = SenderCollection.senderCollection.size(); i > 0; i--)
 	{ 
-            // Get and Asing the most low Frequency to the Sender
+            // Get and Assign the most low Frequency to the Sender
 	    if (!tempSender.getDisableFrecuencies().contains(i))
 		tempSender.setFrequency(i);
 	}
 	
-        // Save the obteined frequencies in the "SenderwithFrequencies List".
+        // Save the obtained frequencies in the "SenderwithFrequencies List".
 	SenderCollection.senderwithFrequencies.add(tempSender);
 	DisabledFrequencies(tempSender.getFrequency(), tempSender.getOverlapsList());
     }
@@ -102,8 +156,8 @@ public class SenderManager
     /// <summary>
     /// SAVE THE DISABLED(barrier) FREQUENCIES
     /// </summary>
-    /// <param name="frequency"> Get the frequencies from "FindFrequencies()" method </param>
-    /// <param name="senderOverlaps"> Get the Overlaps from the "FindFrequencies()" method </param>
+    /// <param name="frequency"> Get the frequencies from "FindFrequencies()" method @param
+    /// <param name="senderOverlaps"> Get the Overlaps from the "FindFrequencies()" method @param
     private void DisabledFrequencies(int frequency, List<Integer> senderOverlap)
     {
 	for (int overlap : senderOverlap)

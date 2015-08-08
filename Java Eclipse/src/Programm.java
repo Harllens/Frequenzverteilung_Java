@@ -1,27 +1,35 @@
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.util.Scanner;
+
 public class Programm
 {
     private static SenderManager senderManager = new SenderManager();
-    public static void main(String[] args) throws Exception
+
+    public static void main(String[] args) throws IOException, InvalidPathException, NullPointerException
     {
-	// String path = "G:\\ProjectsGit\\Frequenzverteilung.G18.IT4b_2015\\Sendefrequenzzuordnung\\src\\SendefrequenzzuordnungPackage\\Eingabe Dateien.txt";
-	int count = 0;
-	String lines = new StringBuilder().append("**\n")
-		.append("** Beispiel der Aufgabenstellung\n").append("**\n")
-		.append("30 110 12.5\n").append("65 100.3 27\n")
-		.append("34.2 60 31.9\n").append("114 100 18\n")
-		.append("87.43 72.57 12.5\n").append("94 120 12.5\n")
-		.append("78.28 42.168 22.119\n").append("118 60 28.5\n")
-		.append("145 38 22.12\n").append("125 122 22.12\n")
-		.append("140 82 17\n").append("145 102 27.5\n").toString();
+	System.out.println("Please Introduce the Path of the .txt file and press Enter");
+	Scanner getPath = new Scanner(System.in);
 
-	count = senderManager.getLinesFromStream(lines.split("\n"));
-	
-	senderManager.CalculateOverlaps();
+	//new File("Sender.txt").getPath();
+	try
+	{
+	    Object[] lines = senderManager.readFileFromText(getPath.nextLine());
+	    getPath.close();
 
-	for (int i = 1; i != count; i++)
-	    senderManager.FindFrequencies();
+	    int count = senderManager.splittLinesFromStreamString(lines);
 
-	senderManager.outPut();
+	    senderManager.CalculateOverlaps();
+
+	    for (int i = 1; i != count; i++)
+		senderManager.FindFrequencies();
+
+	    senderManager.outPut();
+	}
+	catch (InvalidPathException | IOException | NullPointerException e)
+	{
+	    System.out.println(e.getMessage());
+	}
     }
 
 }
