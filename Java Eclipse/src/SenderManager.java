@@ -58,7 +58,7 @@ public class SenderManager
 	    count++;
 
 	    if(!Sender.isEmpty())
-		    System.out.println(Sender);
+		System.out.println(Sender);
 	    
 	}while(count != SenderCollection.senderwithFrequencies.size());
     }

@@ -4,7 +4,7 @@ public class SenderModul
     public SenderModul()
     { }
     
-    public String[] getSenderText ()
+    public String[] readStringFromSenderModulClass ()
     {
 	 return  new StringBuilder()
 	        .append("30 110 12.5\n")

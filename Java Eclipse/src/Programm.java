@@ -19,7 +19,7 @@ public class Programm
 		lines = senderManager.readFileFromText(new Scanner(System.in).nextLine());
 	    }
 	    else 
-		lines = new SenderModul().getSenderText();
+		lines = new SenderModul().readStringFromSenderModulClass();
 
 	    
 	    int count = senderManager.splittLinesFromStreamString(lines);
@@ -36,5 +36,4 @@ public class Programm
 	    System.out.println(e.getMessage());
 	}
     }
-
 }

@@ -15,7 +15,7 @@ public class Sender
     private List<Integer> DisableFrecuencies = new ArrayList<Integer>();
 
     // /
-    // Get / Set methods for the properties
+    // Get / Set properties
     // /
     int getSender()
     {
